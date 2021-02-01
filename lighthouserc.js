@@ -1,8 +1,7 @@
 module.exports = {
     ci: {
       collect: {
-        url: ['http://localhost:4200/'],
-        startServerCommand: 'ng serve'
+        staticDistDir: './dist/todo-crud-app/'
       },
       upload: {
         target: 'temporary-public-storage',
