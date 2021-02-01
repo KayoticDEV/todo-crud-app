@@ -1,0 +1,32 @@
+<div class="container">
+  <form #myForm="ngForm">
+    <div class="form-group" style="padding-top: 4%;">
+      <label for="todoItem">To-Do Item</label>
+      <input type="text" class="form-control" name="item" aria-describedby="itemInfo" 
+      placeholder="Enter Todo Item" ngModel>
+      <small id="itemInfo" class="form-text text-muted">To-Do Item character limit: 50</small>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="addToDoItem(myForm.value)">Submit</button>
+  </form>
+  
+  <br><br>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">To-Do Items</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todoItem of todoItems">
+        <td>{{todoItem.id}}</td>
+        <td>{{todoItem.item}}</td>
+        <td><button class="btn btn-warning" (click)="modifyToDoItem(todoItem)">Edit</button></td>
+        <td><button class="btn btn-danger" (click)="removeToDoItem(todoItem)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
