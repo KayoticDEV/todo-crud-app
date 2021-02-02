@@ -21,7 +21,8 @@ module.exports = {
             'unminified-javascript':'off',
             'unused-css-rules':'off',
             'unused-javascript':'off',
-            'uses-rel-preconnect':'off'
+            'uses-rel-preconnect':'off',
+            'errors-in-console': 'off'
           }
         },
       },
