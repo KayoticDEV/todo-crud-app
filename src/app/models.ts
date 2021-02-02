@@ -1,8 +1,8 @@
-export type ToDoItem = {
+export type TodoItem = {
     id: number;
     item: string;
 }
 
 export type Response = {
-    toDoItem: ToDoItem[]
+    todoItem: TodoItem[]
 }

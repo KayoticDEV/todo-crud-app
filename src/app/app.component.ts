@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from './common.service';
-import { ToDoItem } from './models';
+import { TodoItem } from './models';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,13 @@ import { ToDoItem } from './models';
 })
 export class AppComponent implements OnInit {
   title = 'todo-crud-app';
-  todoItems: ToDoItem[] = [];
+  todoItems: TodoItem[] = [];
+  isUpdate: boolean = false;
+  todoItem = {
+    id: -1,
+    item: ''
+  } 
+
 
   constructor(private commonService: CommonService) {  }
 
@@ -18,18 +24,27 @@ export class AppComponent implements OnInit {
   }
 
   fetchAllToDoItems() {
-    console.log(this.commonService.getToDoItems());
+    this.commonService.getToDoItems().subscribe((todoItems: TodoItem[]) => {
+      this.todoItems = todoItems
+    });
   }
 
   addToDoItem(item: string) {
     this.commonService.createToDoItem(item);
   }
 
-  removeToDoItem(todoItem: ToDoItem) {
+  removeToDoItem(todoItem: TodoItem) {
     this.commonService.deleteToDoItem(todoItem.id);
+    this.isUpdate = false;
   }
 
-  modifyToDoItem(todoItem: ToDoItem) {
+  modifyToDoItem(todoItem: TodoItem) {
     this.commonService.updateToDoItem(todoItem.id, todoItem.item);
+    this.isUpdate = false;
+  }
+
+  editToDoItem(todoItem: TodoItem) {
+    this.todoItem = todoItem;
+    this.isUpdate = true;
   }
 }
