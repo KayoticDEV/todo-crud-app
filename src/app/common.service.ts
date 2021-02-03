@@ -1,45 +1,80 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import ggl from 'graphql-tag';
+import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
-import { Observable } from "rxjs";
-import { ToDoItem, Response } from './models';
+import { Observable, Subscription } from "rxjs";
+import { TodoItem, Response } from './models';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommonService {   
-    private toDoItems: Observable<ToDoItem[]>;
+    private todoItems: Observable<TodoItem[]>;
+    todoSubscription: Subscription;
 
     constructor(private apollo: Apollo) {
-        this.toDoItems = this.getToDoItems();
+        this.todoItems = new Observable;
+        this.todoSubscription = new Subscription;
     }
 
     getToDoItems() {
         return this.apollo.watchQuery<Response>({
-            query: ggl`
+            query: gql`
             query {
-                toDoItem {
+                todoItem {
                   id
                   item
                 }
-              }`
+            }`
         })
         .valueChanges
         .pipe(
-            map(result => result.data.toDoItem)
+            map(result => result.data.todoItem)
         );
     }
 
     createToDoItem(item: string) {
-        console.log(item);
+        this.apollo.mutate({
+            mutation: gql`
+            mutation ($item: String!) {
+                insert_todoItem(objects: {item: $item}) {
+                    affected_rows
+                }
+            }`,
+            variables: {
+                item
+            },
+        }).subscribe();
     }
 
     deleteToDoItem(id: number) {
-        console.log(id);
+        return this.apollo.mutate({
+            mutation: gql`
+            mutation ($id: Int) {
+                delete_todoItem(where: {id: {_eq: $id}}) {
+                  affected_rows
+                }
+            }`,
+            variables: {
+                id
+            },
+        });
     }
 
     updateToDoItem(id: number, item: string) {
-        console.log(id, item);
+        return this.apollo.mutate({
+            mutation: gql`
+            mutation ($id: Int, $item: String!) {
+                update_todoItem(
+                    where: {id: {_eq: $id}}, 
+                    _set: {item: $item})
+                {
+                  affected_rows
+                }
+              }`,
+            variables: {
+                id, item
+            },
+        });
     }
 }

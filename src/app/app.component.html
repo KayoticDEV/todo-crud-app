@@ -1,12 +1,15 @@
 <div class="container">
   <form #myForm="ngForm">
     <div class="form-group" style="padding-top: 4%;">
+      <input type="number" class="form-control" name="id" 
+      placeholder="Enter Todo Id" [hidden]=true [(ngModel)]="todoItem.id">
       <label for="todoItem">To-Do Item</label>
       <input type="text" class="form-control" name="item" aria-describedby="itemInfo" 
-      placeholder="Enter Todo Item" ngModel>
+      placeholder="Enter Todo Item" [(ngModel)]="todoItem.item">
       <small id="itemInfo" class="form-text text-muted">To-Do Item character limit: 50</small>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="addToDoItem(myForm.value)">Submit</button>
+    <button type="submit" [hidden]="isUpdate" class="btn btn-primary" (click)="addToDoItem(myForm.value)">Submit</button>
+    <button type="submit" [hidden]="!isUpdate" class="btn btn-secondary" (click)="modifyToDoItem(myForm.value)">Update</button>
   </form>
   
   <br><br>
@@ -24,7 +27,7 @@
       <tr *ngFor="let todoItem of todoItems">
         <td>{{todoItem.id}}</td>
         <td>{{todoItem.item}}</td>
-        <td><button class="btn btn-warning" (click)="modifyToDoItem(todoItem)">Edit</button></td>
+        <td><button class="btn btn-warning" (click)="editToDoItem(todoItem)">Edit</button></td>
         <td><button class="btn btn-danger" (click)="removeToDoItem(todoItem)">Delete</button></td>
       </tr>
     </tbody>
