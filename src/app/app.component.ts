@@ -29,17 +29,21 @@ export class AppComponent implements OnInit {
     });
   }
 
-  addToDoItem(item: string) {
-    this.commonService.createToDoItem(item);
+  addToDoItem(todoItem: TodoItem) {
+    this.commonService.createToDoItem(todoItem.item);
   }
 
   removeToDoItem(todoItem: TodoItem) {
-    this.commonService.deleteToDoItem(todoItem.id);
+    this.commonService.deleteToDoItem(todoItem.id).subscribe(() =>
+      this.fetchAllToDoItems()
+    );
     this.isUpdate = false;
   }
 
   modifyToDoItem(todoItem: TodoItem) {
-    this.commonService.updateToDoItem(todoItem.id, todoItem.item);
+    this.commonService.updateToDoItem(todoItem.id, todoItem.item).subscribe(() =>
+      this.fetchAllToDoItems()
+    );
     this.isUpdate = false;
   }
 

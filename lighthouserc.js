@@ -14,6 +14,7 @@ module.exports = {
             'categories:seo': ['error', {aggregationMethod: 'optimistic', minScore: 0.60}]  ,
             'first-contentful-paint': ['warn', {aggregationMethod: 'optimistic', minSmaxNumericValuecore: 3000}],
             'interactive': ['warn', {aggregationMethod: 'optimistic', minSmaxNumericValuecore: 6000}],
+            'interactive': ['error', {aggregationMethod: 'optimistic', minSmaxNumericValuecore: 2000}],
             'color-contrast': 'off',
             'label': 'off',
             'meta-description':'off',  
