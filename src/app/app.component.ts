@@ -47,8 +47,10 @@ export class AppComponent implements OnInit {
     this.isUpdate = false;
   }
 
+  // Edit List
   editToDoItem(todoItem: TodoItem) {
     this.todoItem = todoItem;
     this.isUpdate = true;
   }
+
 }
