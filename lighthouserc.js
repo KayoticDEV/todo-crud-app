@@ -1,7 +1,7 @@
 module.exports = {
     ci: {
         collect: {
-            staticDistDir: './changedFilesCopyDir/',
+            staticDistDir: './dist/todo-crud-app/',
             method: 'node',
             additive: false,                            
             headful: false,
